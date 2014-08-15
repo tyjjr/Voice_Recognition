@@ -67,28 +67,28 @@ class VoiceRecognition
 public:
 	VoiceRecognition();
 
-	void Reset();
-	void Init(uint8_t mic=MIC);
-	void ASR_Init();
-	unsigned char Start();
-	void AddCommand(char *pass,int num);
-	int Read();
+	void reset();
+	void init(uint8_t mic=MIC);
+	void ASR_init();
+	unsigned char start();
+	void addCommand(char *pass,int num);
+	int read();
 	
-	void MicVol(uint8_t vol);
-	void SpeechEndpoint(uint8_t speech_endpoint_);
-	void SpeechStartTime(uint8_t speech_start_time_);
-	void SpeechEndTime(uint8_t speech_end_time_);
-	void VoiceMaxLength(uint8_t voice_max_length_);
-	void NoiseTime(uint8_t noise_time_);
+	void micVol(uint8_t vol);
+	void speechEndpoint(uint8_t speech_endpoint_);
+	void speechStartTime(uint8_t speech_start_time_);
+	void speechEndTime(uint8_t speech_end_time_);
+	void voiceMaxLength(uint8_t voice_max_length_);
+	void noiseTime(uint8_t noise_time_);
  private:
 
 };
 
-	void WriteReg(unsigned char address,unsigned char value);
-	unsigned char ReadReg(unsigned char address);
-	byte Transfer(byte _data);
-	void CSHigh(void); 
-	void CS_Low(void);
+	void writeReg(unsigned char address,unsigned char value);
+	unsigned char readReg(unsigned char address);
+	byte transfer(byte _data);
+	void cSHigh(void); 
+	void cSLow(void);
 	void update();
-	int Check_b2();
+	int check_b2();
 #endif

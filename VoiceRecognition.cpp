@@ -28,7 +28,7 @@ int readnum=0;
 
 VoiceRecognition::VoiceRecognition(){}
 
-int VoiceRecognition::Read()//Ê¶±ð½á¹û¶ÁÈ¡
+int VoiceRecognition::read()//Ê¶±ð½á¹û¶ÁÈ¡
 {
 	if(readflag==1)
 	{	
@@ -40,97 +40,97 @@ int VoiceRecognition::Read()//Ê¶±ð½á¹û¶ÁÈ¡
 void update()//ÖÐ¶Ï·þÎñº¯Êý
 { 
 	uint8_t Asr_Count=0;
-	if((ReadReg(0x2b) & 0x10) && ReadReg(0xb2)==0x21 && ReadReg(0xbf)==0x35)//Èç¹ûÓÐÓïÒôÊ¶±ðÖÐ¶Ï¡¢DSPÏÐ¡¢ASRÕý³£½áÊø
+	if((readReg(0x2b) & 0x10) && readReg(0xb2)==0x21 && readReg(0xbf)==0x35)//Èç¹ûÓÐÓïÒôÊ¶±ðÖÐ¶Ï¡¢DSPÏÐ¡¢ASRÕý³£½áÊø
 	{
-		WriteReg(0x29,0) ;///////////¹ØÖÐ¶Ï
-		WriteReg(0x02,0) ;/////////////¹ØFIFOÖÐ¶Ï
-		Asr_Count = ReadReg(0xba);//¶ÁÖÐ¶Ï¸¨ÖúÐÅÏ¢
+		writeReg(0x29,0) ;///////////¹ØÖÐ¶Ï
+		writeReg(0x02,0) ;/////////////¹ØFIFOÖÐ¶Ï
+		Asr_Count = readReg(0xba);//¶ÁÖÐ¶Ï¸¨ÖúÐÅÏ¢
 		if(Asr_Count>0 && Asr_Count<4) //////Èç¹ûÓÐÊ¶±ð½á¹û
 		{
-			readnum=ReadReg(0xc5);
+			readnum=readReg(0xc5);
 			readflag=1;
 		}	
-		WriteReg(0x2b,0);//////Çå³þÖÐ¶Ï±àºÅ
-		WriteReg(0x1C,0);////////Ã²ËÆ¹ØÂó¿Ë·ç°¡~~ÎªÃ«
+		writeReg(0x2b,0);//////Çå³þÖÐ¶Ï±àºÅ
+		writeReg(0x1C,0);////////Ã²ËÆ¹ØÂó¿Ë·ç°¡~~ÎªÃ«
 	}
-	ReadReg(0x06);  
+	readReg(0x06);  
 	delay(10);
-	ReadReg(0x06);  
-	WriteReg(0x89, 0x03);  
+	readReg(0x06);  
+	writeReg(0x89, 0x03);  
 	delay(5);
-	WriteReg(0xcf, 0x43);  
+	writeReg(0xcf, 0x43);  
 	delay(5);
-	WriteReg(0xcb, 0x02);
-	WriteReg(0x11, PLL_11);  
-	WriteReg(0x1e,0x00);
-	WriteReg(0x19, PLL_ASR_19); 
-	WriteReg(0x1b, PLL_ASR_1B);	
-	WriteReg(0x1d, PLL_ASR_1D);
+	writeReg(0xcb, 0x02);
+	writeReg(0x11, PLL_11);  
+	writeReg(0x1e,0x00);
+	writeReg(0x19, PLL_ASR_19); 
+	writeReg(0x1b, PLL_ASR_1B);	
+	writeReg(0x1d, PLL_ASR_1D);
 	delay(10);
-	WriteReg(0xcd, 0x04);
-	WriteReg(0x17, 0x4c); 
+	writeReg(0xcd, 0x04);
+	writeReg(0x17, 0x4c); 
 	delay(5);
-	WriteReg(0xcf, 0x4f);  
-	WriteReg(0xbd, 0x00);
-	WriteReg(0x17, 0x48);
+	writeReg(0xcf, 0x4f);  
+	writeReg(0xbd, 0x00);
+	writeReg(0x17, 0x48);
 	delay(10);
-	WriteReg(0x3c, 0x80);  
-	WriteReg(0x3e, 0x07);
-	WriteReg(0x38, 0xff);  
-	WriteReg(0x3a, 0x07);
-	WriteReg(0x40, 0);   
-	WriteReg(0x42, 8);
-	WriteReg(0x44, 0); 
-	WriteReg(0x46, 8); 
+	writeReg(0x3c, 0x80);  
+	writeReg(0x3e, 0x07);
+	writeReg(0x38, 0xff);  
+	writeReg(0x3a, 0x07);
+	writeReg(0x40, 0);   
+	writeReg(0x42, 8);
+	writeReg(0x44, 0); 
+	writeReg(0x46, 8); 
 	delay(1);	
-	WriteReg(0x1c, 0x09);////////Âó¿Ë·çÉèÖÃ±£Áô
-	WriteReg(0xbd, 0x20);/////////±£ÁôÉèÖÃ
-	WriteReg(0x08, 0x01);///////////¡úÇå³ýFIFO_DATA
+	writeReg(0x1c, 0x09);////////Âó¿Ë·çÉèÖÃ±£Áô
+	writeReg(0xbd, 0x20);/////////±£ÁôÉèÖÃ
+	writeReg(0x08, 0x01);///////////¡úÇå³ýFIFO_DATA
 	delay( 1);
-	WriteReg(0x08, 0x00);////////////Çå³ýÖ¸¶¨FIFOºóÔÙÐ´ÈëÒ»´Î00H
+	writeReg(0x08, 0x00);////////////Çå³ýÖ¸¶¨FIFOºóÔÙÐ´ÈëÒ»´Î00H
 	delay( 1);
-	WriteReg(0xb2, 0xff);////////¸ø0xB2Ð´FF
-	WriteReg(0x37, 0x06);////////¿ªÊ¼Ê¶±ð
+	writeReg(0xb2, 0xff);////////¸ø0xB2Ð´FF
+	writeReg(0x37, 0x06);////////¿ªÊ¼Ê¶±ð
 	delay( 5 );
-	WriteReg(0x1c, g_Mic);////////Ñ¡ÔñÂó¿Ë·ç
-	WriteReg(0x29, 0x10);////////¿ªÍ¬²½ÖÐ¶Ï
-	WriteReg(0xbd, 0x00);/////////Æô¶¯ÎªÓïÒôÊ¶±ð
+	writeReg(0x1c, g_Mic);////////Ñ¡ÔñÂó¿Ë·ç
+	writeReg(0x29, 0x10);////////¿ªÍ¬²½ÖÐ¶Ï
+	writeReg(0xbd, 0x00);/////////Æô¶¯ÎªÓïÒôÊ¶±ð
 }	
-void CSHigh() {//CSÀ­¸ß
+void cSHigh() {//CSÀ­¸ß
   digitalWrite(CS, HIGH);
 }
-void CSLow() {//CS½ÅÀ­µÍ
+void cSLow() {//CS½ÅÀ­µÍ
   digitalWrite(CS, LOW);
 }
-void WriteReg(unsigned char address,unsigned char value)////////Ð´¼Ä´æÆ÷£¬²ÎÊý£¨¼Ä´æÆ÷µØÖ·£¬Êý¾Ý£©
+void writeReg(unsigned char address,unsigned char value)////////Ð´¼Ä´æÆ÷£¬²ÎÊý£¨¼Ä´æÆ÷µØÖ·£¬Êý¾Ý£©
 {	
-	CSLow();////À­µÍCS
+	cSLow();////À­µÍCS
 	delay(10);
-	Transfer(0x04);////////////Ð´Ö¸Áî
-	Transfer(address);
-	Transfer(value);
-	CSHigh();////À­¸ßCS
+	transfer(0x04);////////////Ð´Ö¸Áî
+	transfer(address);
+	transfer(value);
+	cSHigh();////À­¸ßCS
  }
 
-unsigned char ReadReg(unsigned char address)///¶Á¼Ä´æÆ÷£¬²ÎÊý£¨¼Ä´æÆ÷µØÖ·£©
+unsigned char readReg(unsigned char address)///¶Á¼Ä´æÆ÷£¬²ÎÊý£¨¼Ä´æÆ÷µØÖ·£©
 { 
 	unsigned char result;
-	CSLow();////À­µÍCS
+	cSLow();////À­µÍCS
 	delay(10);
-	Transfer(0x05);///////////¶ÁÖ¸Áî
-	Transfer(address);
-	result=Transfer(0x00);
-	CSHigh();///À­¸ßCS
+	transfer(0x05);///////////¶ÁÖ¸Áî
+	transfer(address);
+	result=transfer(0x00);
+	cSHigh();///À­¸ßCS
 	return(result);
  }
-byte Transfer(byte _data) /////////////////SPIÊý¾Ý½»»»
+byte transfer(byte _data) /////////////////SPIÊý¾Ý½»»»
 {
 	SPDR = _data;
 	while (!(SPSR & _BV(SPIF)));
 	return SPDR;
 }
 
-void VoiceRecognition::Init(uint8_t mic)////////Ä£¿éÆôÓÃ£¬²ÎÊýÎªÂó¿Ë·çÑ¡Ôñ£¨MIC/MONO£©ÓëË¿Ó¡¶ÔÕÕ,ÔÚSETUPÖÐµ÷ÓÃ
+void VoiceRecognition::init(uint8_t mic)////////Ä£¿éÆôÓÃ£¬²ÎÊýÎªÂó¿Ë·çÑ¡Ôñ£¨MIC/MONO£©ÓëË¿Ó¡¶ÔÕÕ,ÔÚSETUPÖÐµ÷ÓÃ
 {
 	if(mic==MIC)
 	{
@@ -142,7 +142,7 @@ void VoiceRecognition::Init(uint8_t mic)////////Ä£¿éÆôÓÃ£¬²ÎÊýÎªÂó¿Ë·çÑ¡Ôñ£¨MIC/
 	}
 	pinMode(RSTB,OUTPUT);
 	pinMode(CS, OUTPUT);
-	CSHigh();
+	cSHigh();
 	pinMode(SPI_MISO_PIN, INPUT);
 	pinMode(SPI_MOSI_PIN, OUTPUT);
 	pinMode(SPI_SCK_PIN, OUTPUT);
@@ -158,12 +158,12 @@ void VoiceRecognition::Init(uint8_t mic)////////Ä£¿éÆôÓÃ£¬²ÎÊýÎªÂó¿Ë·çÑ¡Ôñ£¨MIC/
 	#endif  // SOFTWARE_SPI	
 	
 	SPCR = (SPCR & ~SPI_MODE_MASK) | 0x08;//ÉèÖÃSCK³£Ì¬µçÆ½ÓëÈ¡ÑùÊ±¼ä£¬0x08ÎªSCK³£Ì¬Îª¸ßµçÆ½£¬ÏÂ½µÑØÓÐÐ§
-	Reset();//LD3320¸´Î»²Ù×÷
+	reset();//LD3320¸´Î»²Ù×÷
 	attachInterrupt(0,update,LOW);//¿ªÖÐ¶Ï	
-	ASR_Init();///ÓïÒôÊ¶±ð³õÊ¼»¯º¯Êý	
+	ASR_init();///ÓïÒôÊ¶±ð³õÊ¼»¯º¯Êý	
 }
 
-void VoiceRecognition::Reset()//LD3320¸´Î»²Ù×÷
+void VoiceRecognition::reset()//LD3320¸´Î»²Ù×÷
 {
   digitalWrite(RSTB,HIGH);
   delay(1);
@@ -171,111 +171,111 @@ void VoiceRecognition::Reset()//LD3320¸´Î»²Ù×÷
   delay(1);
   digitalWrite(RSTB,HIGH);
   delay(1);
-  CSLow();
+  cSLow();
   delay(1);
-  CSHigh();
+  cSHigh();
   delay(1);  
-  WriteReg(0xb9, 0x00);
+  writeReg(0xb9, 0x00);
 }
 
-void VoiceRecognition::ASR_Init()////////////³õÊ¼»¯ÓïÒôÊ¶±ðÄ£Ê½¡¢
+void VoiceRecognition::ASR_init()////////////³õÊ¼»¯ÓïÒôÊ¶±ðÄ£Ê½¡¢
 {
 	  //Ìí¼Ó×´Ì¬±ê¼Ç 
-	  ReadReg(0x06);  
-//	  WriteReg(0x17, 0x35); 
+	  readReg(0x06);  
+//	  writeReg(0x17, 0x35); 
 	  delay(10);
-	  ReadReg(0x06);  
-	  WriteReg(0x89, 0x03);  
+	  readReg(0x06);  
+	  writeReg(0x89, 0x03);  
 	  delay(5);
-	  WriteReg(0xcf, 0x43);  
+	  writeReg(0xcf, 0x43);  
 	  delay(5);
-	  WriteReg(0xcb, 0x02);
-	  WriteReg(0x11, PLL_11);  
-	  WriteReg(0x1e,0x00);
-	  WriteReg(0x19, PLL_ASR_19); 
-	  WriteReg(0x1b, PLL_ASR_1B);	
-	  WriteReg(0x1d, PLL_ASR_1D);
+	  writeReg(0xcb, 0x02);
+	  writeReg(0x11, PLL_11);  
+	  writeReg(0x1e,0x00);
+	  writeReg(0x19, PLL_ASR_19); 
+	  writeReg(0x1b, PLL_ASR_1B);	
+	  writeReg(0x1d, PLL_ASR_1D);
 	  delay(10);
-	  WriteReg(0xcd, 0x04);
-	  WriteReg(0x17, 0x4c); 
+	  writeReg(0xcd, 0x04);
+	  writeReg(0x17, 0x4c); 
 	  delay(5);
-//	  WriteReg(0xb9, 0x00);
-	  WriteReg(0xcf, 0x4f);  
-	  WriteReg(0xbd, 0x00);
-	  WriteReg(0x17, 0x48);
+//	  writeReg(0xb9, 0x00);
+	  writeReg(0xcf, 0x4f);  
+	  writeReg(0xbd, 0x00);
+	  writeReg(0x17, 0x48);
 	  delay(10);
-	  WriteReg(0x3c, 0x80);  
-	  WriteReg(0x3e, 0x07);
-	  WriteReg(0x38, 0xff);  
-	  WriteReg(0x3a, 0x07);
-	  WriteReg(0x40, 0);   
-	  WriteReg(0x42, 8);
-	  WriteReg(0x44, 0); 
-	  WriteReg(0x46, 8); 
+	  writeReg(0x3c, 0x80);  
+	  writeReg(0x3e, 0x07);
+	  writeReg(0x38, 0xff);  
+	  writeReg(0x3a, 0x07);
+	  writeReg(0x40, 0);   
+	  writeReg(0x42, 8);
+	  writeReg(0x44, 0); 
+	  writeReg(0x46, 8); 
 	  delay(1);
 }
-void VoiceRecognition::AddCommand(char *pass,int num)
+void VoiceRecognition::addCommand(char *pass,int num)
 {
 
 	int i;
-		WriteReg(0xc1, num);//×Ö·û±àºÅ
-		WriteReg(0xc3, 0 );//Ìí¼ÓÊ±ÊäÈë00
-		WriteReg(0x08, 0x04);//²»Çå³ý
+		writeReg(0xc1, num);//×Ö·û±àºÅ
+		writeReg(0xc3, 0 );//Ìí¼ÓÊ±ÊäÈë00
+		writeReg(0x08, 0x04);//²»Çå³ý
   
 		delay(1);
-		WriteReg(0x08, 0x00);//
+		writeReg(0x08, 0x00);//
 		delay(1);
 	for(i=0;i<=80;i++)
 	{
 		if (pass[i] == 0)
 			break;
-		WriteReg(0x5, pass[i]);///Ð´ÈëFIFO_EXT
+		writeReg(0x5, pass[i]);///Ð´ÈëFIFO_EXT
 	}
-	WriteReg(0xb9, i);//Ð´Èëµ±Ç°Ìí¼Ó×Ö·û´®³¤¶È
-	WriteReg(0xb2, 0xff);//////////B2È«Ð´ff 
-	WriteReg(0x37, 0x04);//Ìí¼ÓÓï¾ä
+	writeReg(0xb9, i);//Ð´Èëµ±Ç°Ìí¼Ó×Ö·û´®³¤¶È
+	writeReg(0xb2, 0xff);//////////B2È«Ð´ff 
+	writeReg(0x37, 0x04);//Ìí¼ÓÓï¾ä
 }
-unsigned char VoiceRecognition::Start()//////¿ªÊ¼Ê¶±ð
+unsigned char VoiceRecognition::start()//////¿ªÊ¼Ê¶±ð
 {
-	WriteReg(0x35, MIC_VOL);////adcÔöÒæ£»»áÓ°ÏìÊ¶±ð·¶Î§¼´ÔëÉù
+	writeReg(0x35, MIC_VOL);////adcÔöÒæ£»»áÓ°ÏìÊ¶±ð·¶Î§¼´ÔëÉù
 	
-	WriteReg(0xb3, speech_endpoint);//ÓïÒô¶Ëµã¼ì²â¿ØÖÆ
+	writeReg(0xb3, speech_endpoint);//ÓïÒô¶Ëµã¼ì²â¿ØÖÆ
 
-	WriteReg(0xb4, speech_start_time);//ÓïÒô¶ËµãÆðÊ¼Ê±¼ä
+	writeReg(0xb4, speech_start_time);//ÓïÒô¶ËµãÆðÊ¼Ê±¼ä
 	
-	WriteReg(0xb5, speech_end_time);//ÓïÒô½áÊøÊ±¼ä
+	writeReg(0xb5, speech_end_time);//ÓïÒô½áÊøÊ±¼ä
 
-	WriteReg(0xb6, voice_max_length);//ÓïÒô½áÊøÊ±¼ä
+	writeReg(0xb6, voice_max_length);//ÓïÒô½áÊøÊ±¼ä
 	
-	WriteReg(0xb7, noise_time);//ÔëÉùÊ±¼ä
+	writeReg(0xb7, noise_time);//ÔëÉùÊ±¼ä
 	
-	WriteReg(0x1c, 0x09);////////Âó¿Ë·çÉèÖÃ±£Áô
+	writeReg(0x1c, 0x09);////////Âó¿Ë·çÉèÖÃ±£Áô
 
-	WriteReg(0xbd, 0x20);/////////±£ÁôÉèÖÃ
-	WriteReg(0x08, 0x01);///////////¡úÇå³ýFIFO_DATA
+	writeReg(0xbd, 0x20);/////////±£ÁôÉèÖÃ
+	writeReg(0x08, 0x01);///////////¡úÇå³ýFIFO_DATA
 	delay( 1);
-	WriteReg(0x08, 0x00);////////////Çå³ýÖ¸¶¨FIFOºóÔÙÐ´ÈëÒ»´Î00H
+	writeReg(0x08, 0x00);////////////Çå³ýÖ¸¶¨FIFOºóÔÙÐ´ÈëÒ»´Î00H
 	delay( 1);
-	if(Check_b2() == 0)////////¶ÁÈ¡0xB2¼Ä´æÆ÷º¯ÊýÈç¹ûDSPÃ»ÔÚÏÐ×´Ì¬ÔòRETURN 0
+	if(check_b2() == 0)////////¶ÁÈ¡0xB2¼Ä´æÆ÷º¯ÊýÈç¹ûDSPÃ»ÔÚÏÐ×´Ì¬ÔòRETURN 0
 	{
 		return 0;
 	}
-	WriteReg(0xb2, 0xff);////////¸ø0xB2Ð´FF
+	writeReg(0xb2, 0xff);////////¸ø0xB2Ð´FF
 
-	WriteReg(0x37, 0x06);////////¿ªÊ¼Ê¶±ð
+	writeReg(0x37, 0x06);////////¿ªÊ¼Ê¶±ð
 	delay( 5 );
-	WriteReg(0x1c, g_Mic);////////Ñ¡ÔñÂó¿Ë·ç
-	WriteReg(0x29, 0x10);////////¿ªÍ¬²½ÖÐ¶Ï
-	WriteReg(0xbd, 0x00);/////////Æô¶¯ÎªÓïÒôÊ¶±ð
+	writeReg(0x1c, g_Mic);////////Ñ¡ÔñÂó¿Ë·ç
+	writeReg(0x29, 0x10);////////¿ªÍ¬²½ÖÐ¶Ï
+	writeReg(0xbd, 0x00);/////////Æô¶¯ÎªÓïÒôÊ¶±ð
 
 	return 1;////·µ»Ø1
 }
 
-int Check_b2()////////ÓÃ×÷¼ì²âÐ¾Æ¬¹¤×÷ÊÇ·ñÕý³££¬»òÕßDSPÊÇ·ñÃ¦£¬²»ÐèÓÃ»§²Ù×÷£¬Õý³£/ÏÐ·µ»Ø1
+int check_b2()////////ÓÃ×÷¼ì²âÐ¾Æ¬¹¤×÷ÊÇ·ñÕý³££¬»òÕßDSPÊÇ·ñÃ¦£¬²»ÐèÓÃ»§²Ù×÷£¬Õý³£/ÏÐ·µ»Ø1
 { 
   for (int j=0; j<10; j++)
 	{
-	  if (ReadReg(0xb2) == 0x21)
+	  if (readReg(0xb2) == 0x21)
 		{
 			return 1;
 		}
@@ -284,34 +284,34 @@ int Check_b2()////////ÓÃ×÷¼ì²âÐ¾Æ¬¹¤×÷ÊÇ·ñÕý³££¬»òÕßDSPÊÇ·ñÃ¦£¬²»ÐèÓÃ»§²Ù×÷£¬Õý³
   return 0;
 }
 
-void VoiceRecognition::MicVol(uint8_t vol)//µ÷ÕûADCÔöÒæ£¬²ÎÊý£¨0x00~0xFF,½¨Òé10-60£©£»
+void VoiceRecognition::micVol(uint8_t vol)//µ÷ÕûADCÔöÒæ£¬²ÎÊý£¨0x00~0xFF,½¨Òé10-60£©£»
 {
 	MIC_VOL=vol;
-	WriteReg(0x35, MIC_VOL);////adcÔöÒæ£»»áÓ°ÏìÊ¶±ð·¶Î§¼´ÔëÉù
+	writeReg(0x35, MIC_VOL);////adcÔöÒæ£»»áÓ°ÏìÊ¶±ð·¶Î§¼´ÔëÉù
 }
-void VoiceRecognition::SpeechEndpoint(uint8_t speech_endpoint_)//µ÷ÕûÓïÒô¶Ëµã¼ì²â£¬²ÎÊý£¨0x00~0xFF,½¨Òé10-40£©£»
+void VoiceRecognition::speechEndpoint(uint8_t speech_endpoint_)//µ÷ÕûÓïÒô¶Ëµã¼ì²â£¬²ÎÊý£¨0x00~0xFF,½¨Òé10-40£©£»
 {
 	speech_endpoint=speech_endpoint_;
-	WriteReg(0xb3, speech_endpoint);//ÓïÒô¶Ëµã¼ì²â¿ØÖÆ
+	writeReg(0xb3, speech_endpoint);//ÓïÒô¶Ëµã¼ì²â¿ØÖÆ
 }
 
-void VoiceRecognition::SpeechStartTime(uint8_t speech_start_time_)//µ÷ÕûÓïÒô¶ËµãÆðÊ¼Ê±¼ä£¬²ÎÊý£¨0x00~0x30,µ¥Î»10MS£©£»
+void VoiceRecognition::speechStartTime(uint8_t speech_start_time_)//µ÷ÕûÓïÒô¶ËµãÆðÊ¼Ê±¼ä£¬²ÎÊý£¨0x00~0x30,µ¥Î»10MS£©£»
 {
 	speech_start_time=speech_start_time_;
-	WriteReg(0xb4, speech_start_time);//ÓïÒô¶ËµãÆðÊ¼Ê±¼ä
+	writeReg(0xb4, speech_start_time);//ÓïÒô¶ËµãÆðÊ¼Ê±¼ä
 }
-/*void VoiceRecognition::SpeechEndTime(uint8_t speech_end_time_)//µ÷ÕûÓïÒô¶Ëµã½áÊøÊ±¼ä£¨ÍÂ×Ö¼ä¸ôÊ±¼ä£©£¬²ÎÊý£¨0x00~0xC3,µ¥Î»10MS£©£»
+void VoiceRecognition::speechEndTime(uint8_t speech_end_time_)//µ÷ÕûÓïÒô¶Ëµã½áÊøÊ±¼ä£¨ÍÂ×Ö¼ä¸ôÊ±¼ä£©£¬²ÎÊý£¨0x00~0xC3,µ¥Î»10MS£©£»
 {
-	//speech_end_time=speech_end_time_;
-	//WriteReg(0xb5, speech_end_time);//ÓïÒô½áÊøÊ±¼ä
-}*/
-void VoiceRecognition::VoiceMaxLength(uint8_t voice_max_length_)//×î³¤ÓïÒô¶ÎÊ±¼ä£¬²ÎÊý£¨0x00~0xC3,µ¥Î»100MS£©£»
+	speech_end_time=speech_end_time_;
+	writeReg(0xb5, speech_end_time);//ÓïÒô½áÊøÊ±¼ä
+}
+void VoiceRecognition::voiceMaxLength(uint8_t voice_max_length_)//×î³¤ÓïÒô¶ÎÊ±¼ä£¬²ÎÊý£¨0x00~0xC3,µ¥Î»100MS£©£»
 {
 	voice_max_length=voice_max_length_;
-	WriteReg(0xb6, voice_max_length);//ÓïÒô
+	writeReg(0xb6, voice_max_length);//ÓïÒô
 }
-void VoiceRecognition::NoiseTime(uint8_t noise_time_)//ÉÏµçÔëÉùÂÔ¹ý£¬²ÎÊý£¨0x00~0xff,µ¥Î»20MS£©£»
+void VoiceRecognition::noiseTime(uint8_t noise_time_)//ÉÏµçÔëÉùÂÔ¹ý£¬²ÎÊý£¨0x00~0xff,µ¥Î»20MS£©£»
 {
 	noise_time=noise_time_;
-	WriteReg(0xb7, noise_time);//ÔëÉùÊ±¼ä
+	writeReg(0xb7, noise_time);//ÔëÉùÊ±¼ä
 }
